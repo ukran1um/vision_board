@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VisionBoard — CollegeBoard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">V</div>
+      <div class="brand-name">VisionBoard</div>
+    </div>
+    <div class="brand-tag">by CollegeBoard</div>
+  </header>
+
+  <div class="tagline">
+    Upload images that inspire you — campuses, careers, people, places, anything.
+    We'll help you discover what colleges and careers align with your vision.
+  </div>
+
+  <main class="app">
+    <section
+      id="board"
+      class="board"
+      aria-label="Vision board drop zone"
+    >
+      <div id="mosaic" class="mosaic" aria-live="polite"></div>
+
+      <div id="empty-hint" class="empty-hint">
+        <div class="empty-hint-inner">
+          <div class="empty-hint-icon">⬇</div>
+          <div class="empty-hint-title">Drop images here</div>
+          <div class="empty-hint-sub">or click <b>Add Image</b> below</div>
+        </div>
+      </div>
+
+      <div class="board-controls">
+        <button id="btn-add" class="btn btn-light" type="button">
+          <span aria-hidden="true">+</span> Add Image
+        </button>
+        <button id="btn-analyze" class="btn btn-primary" type="button" disabled>
+          <span class="btn-label">✨ Analyze My Vision</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <input
+        id="file-input"
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+      >
+    </section>
+
+    <aside class="reflections" aria-label="Reflections">
+      <div class="reflections-label">Reflections</div>
+
+      <div id="reflections-empty" class="reflections-empty">
+        Add a few images that represent you, then click
+        <b>Analyze My Vision</b>. Your personalized reflections will appear here.
+      </div>
+
+      <div id="reflections-list" class="reflections-list" hidden></div>
+
+      <div id="reflections-skeleton" class="reflections-skeleton" hidden>
+        <div class="skel"></div>
+        <div class="skel short"></div>
+        <div class="skel"></div>
+        <div class="skel short"></div>
+        <div class="skel"></div>
+      </div>
+
+      <div id="toast-container" class="toast-container" aria-live="polite"></div>
+    </aside>
+  </main>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
