@@ -4,7 +4,7 @@
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {}
   },
-  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc && export PATH=$HOME/.local/bin:$PATH && uv sync",
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc && $HOME/.local/bin/uv sync",
   "postAttachCommand": {
     "server": "export PATH=$HOME/.local/bin:$PATH && uv run uvicorn backend.app:app --host 0.0.0.0 --port 8000 --reload"
   },
@@ -14,15 +14,6 @@
       "label": "VisionBoard",
       "onAutoForward": "openBrowser",
       "visibility": "public"
-    }
-  },
-  "remoteEnv": {
-    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
-  },
-  "secrets": {
-    "ANTHROPIC_API_KEY": {
-      "description": "Anthropic API key for Claude (required for image analysis)",
-      "documentationUrl": "https://console.anthropic.com/settings/keys"
     }
   },
   "customizations": {
