@@ -15,6 +15,15 @@ const JPEG_QUALITY = 0.85;
 const ACCEPTED_PREFIX = "image/";
 const ANALYZE_TIMEOUT_MS = 60_000;
 
+function getSessionToken() {
+  const meta = document.querySelector('meta[name="vb-token"]');
+  const val = meta ? meta.getAttribute("content") : "";
+  // Guard against the server forgetting to substitute the placeholder
+  if (!val || val === "__VB_TOKEN__") return "";
+  return val;
+}
+const SESSION_TOKEN = getSessionToken();
+
 const state = {
   images: [],      // [{ id, blob, dataUrl, ratioClass }]
   statements: [],  // [{ text, original, verdict }]
@@ -274,9 +283,13 @@ async function analyze() {
   const timeoutId = setTimeout(() => controller.abort(), ANALYZE_TIMEOUT_MS);
 
   try {
+    const headers = {};
+    if (SESSION_TOKEN) headers["X-VB-Token"] = SESSION_TOKEN;
+
     const res = await fetch("/api/analyze", {
       method: "POST",
       body: formData,
+      headers,
       signal: controller.signal,
     });
     clearTimeout(timeoutId);
@@ -287,6 +300,11 @@ async function analyze() {
         const errJson = await res.json();
         if (errJson.detail) msg = errJson.detail;
       } catch (_) { /* ignore */ }
+      if (res.status === 401) {
+        msg = "Your session expired. Refresh the page and try again.";
+      } else if (res.status === 429) {
+        msg = msg || "You're going too fast. Please wait a moment.";
+      }
       throw new Error(msg);
     }
 

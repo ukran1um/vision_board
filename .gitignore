@@ -5,5 +5,6 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .superpowers/
+.claude/
 .DS_Store
 uv.lock
